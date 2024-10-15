@@ -6,6 +6,7 @@
   --dark: #3f3e3e;
   --light: #e0e0e0;
   --darkerlight: #919191;
+  --red: #ff1504;
 }
 
 /* Site styling */
@@ -36,7 +37,7 @@ h1 {
   margin: 30px auto;
 }
 
-/* Add Boo Button styling */
+/* Add Book Button styling */
 
 .addBook {
     display: flex; 
@@ -58,3 +59,137 @@ h1 {
 .addButton:hover {
     background-color: var(--darkerlight);
 }
+
+/* Add Book Modal Styling */
+
+.modal {
+    position: fixed;
+    z-index: 1;
+    top: 50%;
+    left: 50%;
+    width: 300px;
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius);
+    background-color: var(--grey);
+    text-align: center;
+    transform: translate(-50%, -50%) scale(0);
+    transition: 0.2s ease-in-out;
+  }
+  
+  .modal.active {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  
+  .add-book-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-lg);
+  }
+  
+  .add-book-form button {
+    width: 100%;
+  }
+  
+  .error-msg {
+    display: none;
+    color: var(--red);
+  }
+  
+  .error-msg.active {
+    display: block;
+    margin-top: -15px;
+  }
+  
+  .input {
+    width: 100%;
+    padding: 10px;
+    border-radius: var(--border-radius);
+  }
+  
+  .is-read {
+    display: flex;
+    gap: var(--spacing-md);
+  }
+  
+  .checkbox {
+    width: 20px;
+    height: 20px;
+    margin-top: 4px;
+    accent-color: white;
+  }
+  
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: none;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  
+  .overlay.active {
+    display: block;
+  }
+
+/* Book Grid styling */
+
+.bookGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 50px;
+    margin-left: 50px;
+}
+
+.book {
+    border-radius: 10px;
+    padding: 20px;
+    transition: 0.3s;
+}
+
+.book:hover {
+    background-color: var(--darkerlight);
+}
+
+.removeButton {
+    display: flex;
+    align-items: center; 
+    gap: 5px;
+    background-color: transparent;
+    border: 0;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 30px;
+    transition: 0.3s;
+}
+
+.removeButton:hover {
+    color: var(--red);
+} 
+
+/* Footer Styling */
+.footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 10px;
+    font-size: 20px;
+    color: var(--dark);
+  }
+  
+  .fa-github {
+    color: var(--dark);
+    font-size: 24px;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .fa-github:hover {
+    transform: rotate(360deg) scale(1.2);
+  }
