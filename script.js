@@ -26,6 +26,14 @@ function addBookToLibrary(name, author, pages, read) {
   myLibrary.push(newBook);
 }
 
+function displayLibrary() {
+  myLibrary.forEach((book, index) => {
+    const bookDiv = document.createElement("div");
+    bookDiv.classList.add("book");
+    
+  })
+}
+
 // Event listeners for modal
 
 addBtn.addEventListener("click", () => {
