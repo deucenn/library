@@ -141,16 +141,8 @@ h1 {
 }
 
 .toggleStatus {
-  transition: 0.3s;
-  width:fit-content
-}
-
-.toggleStatus:hover {
-  background: var(--dark);
-  border-radius: 5px;
+  width:fit-content;
   cursor: pointer;
-  color: var(--light);
-  width:fit-content
 }
 
 .removeButton {
