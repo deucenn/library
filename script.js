@@ -9,6 +9,7 @@ const bookTitle = document.getElementById("title");
 const bookAuthor = document.getElementById("author");
 const bookPages = document.getElementById("pages");
 const bookRead = document.getElementById("isRead");
+const toggleStatus = document.querySelector(".toggleStatus");
 
 // Library Funtions
 
@@ -33,6 +34,11 @@ function removeBook(index) {
   displayLibrary();
 }
 
+function toggleBookStatus(index) {
+  myLibrary[index].read =!myLibrary[index].read;
+  displayLibrary();
+}
+
 function displayLibrary() {
   bookGrid.innerHTML = "";
   myLibrary.forEach((book, index) => {
@@ -49,13 +55,13 @@ function displayLibrary() {
     bookDiv.appendChild(pagesP);
     const readP = document.createElement("p");
     readP.textContent = book.read ? "Status: Read" : "Status: Not Read";
+    readP.classList.add("toggleStatus");
+    readP.setAttribute("onclick", `toggleBookStatus(${index})`);
     bookDiv.appendChild(readP);
     const removeBtn = document.createElement("button");
     removeBtn.classList.add("removeButton");
     removeBtn.innerHTML = `<span class="material-icons-outlined redButton"> delete </span>`;
     removeBtn.setAttribute("onclick", `removeBook(${index})`);
-
-    // Append the remove button to the bookDiv
     bookDiv.appendChild(removeBtn);
 
     bookGrid.appendChild(bookDiv);
@@ -81,6 +87,8 @@ submitBtn.addEventListener("click", () => {
   const pages = bookPages.value;
   const read = bookRead.checked;
 
+  if (title == "" || author == "" || pages == "") return;
+
   addBookToLibrary(title, author, pages, read);
 
   bookTitle.value = "";
@@ -92,3 +100,5 @@ submitBtn.addEventListener("click", () => {
   bookModal.classList.remove("active");
   bookGrid.classList.remove("blurred");
 });
+
+

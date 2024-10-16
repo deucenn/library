@@ -143,6 +143,19 @@ h1 {
   background-color: var(--darkerlight);
 }
 
+.toggleStatus {
+  transition: 0.3s;
+  width:fit-content
+}
+
+.toggleStatus:hover {
+  background: var(--dark);
+  border-radius: 5px;
+  cursor: pointer;
+  color: var(--light);
+  width:fit-content
+}
+
 .removeButton {
   display: flex;
   align-items: center;
