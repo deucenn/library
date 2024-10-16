@@ -9,11 +9,9 @@ const bookTitle = document.getElementById("title");
 const bookAuthor = document.getElementById("author");
 const bookPages = document.getElementById("pages");
 const bookRead = document.getElementById("isRead");
-const toggleStatus = document.querySelector(".toggleStatus");
 
-// Library Funtions
-
-const myLibrary = [];
+// Library Functions
+const myLibrary = JSON.parse(localStorage.getItem("library")) || []; 
 
 function Book(name, author, pages, read) {
   this.name = name;
@@ -25,39 +23,47 @@ function Book(name, author, pages, read) {
 function addBookToLibrary(name, author, pages, read) {
   const newBook = new Book(name, author, pages, read);
   myLibrary.push(newBook);
-  console.log(myLibrary);
+  updateLocalStorage(); 
   displayLibrary();
 }
 
 function removeBook(index) {
-  myLibrary.splice(index, 1);
+  myLibrary.splice(index, 1); 
+  updateLocalStorage(); 
   displayLibrary();
 }
 
 function toggleBookStatus(index) {
-  myLibrary[index].read =!myLibrary[index].read;
-  displayLibrary();
+  myLibrary[index].read = !myLibrary[index].read; 
+  updateLocalStorage(); // 
+  displayLibrary(); // 
 }
 
 function displayLibrary() {
-  bookGrid.innerHTML = "";
+  bookGrid.innerHTML = ""; 
+
   myLibrary.forEach((book, index) => {
     const bookDiv = document.createElement("div");
     bookDiv.classList.add("book");
+
     const titleP = document.createElement("p");
     titleP.textContent = book.name;
     bookDiv.appendChild(titleP);
+
     const authorP = document.createElement("p");
     authorP.textContent = `Author: ${book.author}`;
     bookDiv.appendChild(authorP);
+
     const pagesP = document.createElement("p");
     pagesP.textContent = `Pages: ${book.pages}`;
     bookDiv.appendChild(pagesP);
+
     const readP = document.createElement("p");
     readP.textContent = book.read ? "Status: Read" : "Status: Not Read";
     readP.classList.add("toggleStatus");
-    readP.setAttribute("onclick", `toggleBookStatus(${index})`);
+    readP.setAttribute("onclick", `toggleBookStatus(${index})`); 
     bookDiv.appendChild(readP);
+
     const removeBtn = document.createElement("button");
     removeBtn.classList.add("removeButton");
     removeBtn.innerHTML = `<span class="material-icons-outlined redButton"> delete </span>`;
@@ -68,8 +74,12 @@ function displayLibrary() {
   });
 }
 
-// Event listeners for modal
+// Save library to localStorage
+function updateLocalStorage() {
+  localStorage.setItem("library", JSON.stringify(myLibrary));
+}
 
+// Event listeners for modal
 addBtn.addEventListener("click", () => {
   console.log("Button clicked!");
   bookModal.classList.add("active");
@@ -87,7 +97,7 @@ submitBtn.addEventListener("click", () => {
   const pages = bookPages.value;
   const read = bookRead.checked;
 
-  if (title == "" || author == "" || pages == "") return;
+  if (title === "" || author === "" || pages === "") return; 
 
   addBookToLibrary(title, author, pages, read);
 
@@ -96,9 +106,12 @@ submitBtn.addEventListener("click", () => {
   bookPages.value = "";
   bookRead.checked = false;
 
-  // Close modal
   bookModal.classList.remove("active");
   bookGrid.classList.remove("blurred");
 });
 
+// Initialize the library display on page load
+document.addEventListener("DOMContentLoaded", () => {
+  displayLibrary();
+});
 
