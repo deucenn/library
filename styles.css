@@ -73,7 +73,7 @@ h1 {
   width: 300px;
   padding: var(--spacing-lg);
   border-radius: var(--border-radius);
-  background-color: var(--grey);
+  background-color: var(--light);
   text-align: center;
   transform: translate(-50%, -50%) scale(0);
   transition: 0.2s ease-in-out;
