@@ -11,36 +11,38 @@ const bookPages = document.getElementById("pages");
 const bookRead = document.getElementById("isRead");
 
 // Library Functions
-const myLibrary = JSON.parse(localStorage.getItem("library")) || []; 
+const myLibrary = JSON.parse(localStorage.getItem("library")) || [];
 
-function Book(name, author, pages, read) {
-  this.name = name;
-  this.author = author;
-  this.pages = pages;
-  this.read = read;
+class Book {
+  constructor(name, author, pages, read) {
+    this.name = name;
+    this.author = author;
+    this.pages = pages;
+    this.read = read;
+  }
 }
 
 function addBookToLibrary(name, author, pages, read) {
   const newBook = new Book(name, author, pages, read);
   myLibrary.push(newBook);
-  updateLocalStorage(); 
+  updateLocalStorage();
   displayLibrary();
 }
 
 function removeBook(index) {
-  myLibrary.splice(index, 1); 
-  updateLocalStorage(); 
+  myLibrary.splice(index, 1);
+  updateLocalStorage();
   displayLibrary();
 }
 
 function toggleBookStatus(index) {
-  myLibrary[index].read = !myLibrary[index].read; 
-  updateLocalStorage(); // 
-  displayLibrary(); // 
+  myLibrary[index].read = !myLibrary[index].read;
+  updateLocalStorage(); //
+  displayLibrary(); //
 }
 
 function displayLibrary() {
-  bookGrid.innerHTML = ""; 
+  bookGrid.innerHTML = "";
 
   myLibrary.forEach((book, index) => {
     const bookDiv = document.createElement("div");
@@ -61,7 +63,7 @@ function displayLibrary() {
     const readP = document.createElement("p");
     readP.textContent = book.read ? "Status: Read" : "Status: Not Read";
     readP.classList.add("toggleStatus");
-    readP.setAttribute("onclick", `toggleBookStatus(${index})`); 
+    readP.setAttribute("onclick", `toggleBookStatus(${index})`);
     bookDiv.appendChild(readP);
 
     const removeBtn = document.createElement("button");
@@ -97,7 +99,7 @@ submitBtn.addEventListener("click", () => {
   const pages = bookPages.value;
   const read = bookRead.checked;
 
-  if (title === "" || author === "" || pages === "") return; 
+  if (title === "" || author === "" || pages === "") return;
 
   addBookToLibrary(title, author, pages, read);
 
@@ -114,4 +116,3 @@ submitBtn.addEventListener("click", () => {
 document.addEventListener("DOMContentLoaded", () => {
   displayLibrary();
 });
-
