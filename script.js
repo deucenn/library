@@ -1,6 +1,5 @@
-//   Set Variables
+// Set Variables
 const addBtn = document.querySelector(".addButton");
-const removeBtn = document.querySelector(".removeButton");
 const bookModal = document.querySelector(".modal");
 const bookGrid = document.querySelector(".bookGrid");
 const submitBtn = document.querySelector(".submitButton");
@@ -37,8 +36,8 @@ function removeBook(index) {
 
 function toggleBookStatus(index) {
   myLibrary[index].read = !myLibrary[index].read;
-  updateLocalStorage(); //
-  displayLibrary(); //
+  updateLocalStorage();
+  displayLibrary();
 }
 
 function displayLibrary() {
@@ -63,13 +62,13 @@ function displayLibrary() {
     const readP = document.createElement("p");
     readP.textContent = book.read ? "Status: Read" : "Status: Not Read";
     readP.classList.add("toggleStatus");
-    readP.setAttribute("onclick", `toggleBookStatus(${index})`);
+    readP.onclick = () => toggleBookStatus(index);
     bookDiv.appendChild(readP);
 
     const removeBtn = document.createElement("button");
     removeBtn.classList.add("removeButton");
-    removeBtn.innerHTML = `<span class="material-icons-outlined redButton"> delete </span>`;
-    removeBtn.setAttribute("onclick", `removeBook(${index})`);
+    removeBtn.innerHTML = `<span class="material-icons-outlined redButton">delete</span>`;
+    removeBtn.onclick = () => removeBook(index);
     bookDiv.appendChild(removeBtn);
 
     bookGrid.appendChild(bookDiv);
@@ -83,7 +82,6 @@ function updateLocalStorage() {
 
 // Event listeners for modal
 addBtn.addEventListener("click", () => {
-  console.log("Button clicked!");
   bookModal.classList.add("active");
   bookGrid.classList.add("blurred");
 });
@@ -94,20 +92,44 @@ closeBtn.addEventListener("click", () => {
 });
 
 submitBtn.addEventListener("click", () => {
-  const title = bookTitle.value;
-  const author = bookAuthor.value;
-  const pages = bookPages.value;
+  const title = bookTitle.value.trim();
+  const author = bookAuthor.value.trim();
+  const pages = bookPages.value.trim();
   const read = bookRead.checked;
 
-  if (title === "" || author === "" || pages === "") return;
+  // Validate input
+  if (!title || !author || !pages) return;
 
+  if (title.length < 3) {
+    bookTitle.setCustomValidity("Title is too short. Minimum 3 characters required.");
+    bookTitle.reportValidity();
+    return;
+  } else {
+    bookTitle.setCustomValidity("");
+  }
+
+  if (author.length < 3) {
+    bookAuthor.setCustomValidity("Author is too short. Minimum 3 characters required.");
+    bookAuthor.reportValidity();
+    return;
+  } else {
+    bookAuthor.setCustomValidity("");
+  }
+
+  if (Number(pages) <= 0) {
+    bookPages.setCustomValidity("Pages must be larger than 0.");
+    bookPages.reportValidity();
+    return;
+  } else {
+    bookPages.setCustomValidity("");
+  }
+
+  // Add book and reset modal
   addBookToLibrary(title, author, pages, read);
-
   bookTitle.value = "";
   bookAuthor.value = "";
   bookPages.value = "";
   bookRead.checked = false;
-
   bookModal.classList.remove("active");
   bookGrid.classList.remove("blurred");
 });
